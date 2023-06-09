@@ -4,7 +4,7 @@
 
 > Modern · Powerful · Simple  
 > 现代 · 强大 · 简洁
-
+> 注:本版本为huntersxy自用二改，使用了js，懒得改readme了，自己去blog.xiey.work看吧
 <p align="center">
 <img alt="Version" src="https://img.shields.io/github/v/release/sukkaw/hexo-theme-suka?color=%235755d9&include_prereleases&label=version&style=flat-square">
 <a href="https://skk.moe" target="_blank"><img alt="Author" src="https://img.shields.io/badge/Author-Sukka-b68469.svg?style=flat-square"/></a>
