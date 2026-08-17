@@ -1,4 +1,5 @@
-const logger = require('hexo-log')();
+const loggerFactory = require('hexo-log');
+const logger = typeof loggerFactory === 'function' ? loggerFactory() : loggerFactory.logger();
 
 module.exports = function (hexo) {
     if (hexo.version.startsWith('3')) {

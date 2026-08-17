@@ -1,16 +1,24 @@
 <!-- ### Footer JS Import ### -->
 
+<!-- ### PJAX (无刷新加载) ### -->
+<% if (theme.pjax && theme.pjax.enable) { %>
+<script>
+    window.SukaPjaxConfig = <%- JSON.stringify({
+        container: theme.pjax.container,
+        exclude: theme.pjax.exclude || [],
+        timeout: theme.pjax.timeout,
+        cache: theme.pjax.cache,
+        transition: theme.pjax.transition,
+        prefetch: theme.pjax.prefetch
+    }) %>;
+</script>
+<script src="<%- url_for('js/pjax.min.js') + '?v=' + theme.verison %>"></script>
+<% } %>
+
 <script>
 
     <%- fragment_cache('footer_inline_js', () => {
         let js = [];
-
-        /* Vanilla Lazyload Config */
-        js.push(`
-window.lazyLoadOptions = {
-    elements_selector: ".lazyload",
-    threshold: 50
-};`);
 
         /* Copyright */
         if (theme.footer.copyright_since > 0) {
@@ -30,7 +38,34 @@ window.lazyLoadOptions = {
         }
 
         /* Suka Theme Console.Log */
-        js.push(`console.log('\\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision ${theme.verison} %c https://github.com/SukkaW/hexo-theme-suka \\n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');`);
+        js.push(`console.log('\\n %c Suka-bulie Theme (hexo-theme-suka-bulie) | fork of SukkaW/hexo-theme-suka | Verision ${theme.verison} %c https://github.com/huntersxy/hexo-theme-suka-bulie \\n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');`);
+
+        /* 首页文章卡片: 点击整卡进入文章 (卡片内链接/按钮照常) */
+        if (theme.post_entry && theme.post_entry.card_click !== false) {
+            js.push(`
+document.addEventListener('click', function (e) {
+    var card = e.target && e.target.closest ? e.target.closest('.post-entry') : null;
+    if (!card) return;
+    if (e.target.closest('a, button, input, select, label')) return;
+    var link = card.querySelector('a[rel="bookmark"], a.card-title');
+    if (link) link.click();
+}, true);`);
+        }
+
+        /* 暗色模式: 未手动选择过时, 跟随系统实时切换 */
+        if (theme.dark_mode && theme.dark_mode.enable !== false) {
+            js.push(`
+if (window.matchMedia) {
+    var sukaSchemeMq = matchMedia('(prefers-color-scheme: dark)');
+    var sukaOnScheme = function (e) {
+        var chosen;
+        try { chosen = localStorage.getItem('suka-dark-mode'); } catch (err) {}
+        if (chosen === '1' || chosen === '0') return;
+        document.documentElement[e.matches ? 'setAttribute' : 'removeAttribute']('data-theme', 'dark');
+    };
+    if (sukaSchemeMq.addEventListener) sukaSchemeMq.addEventListener('change', sukaOnScheme);
+}`);
+        }
 
         return js.join('\n');
     }) %>
@@ -39,13 +74,6 @@ window.lazyLoadOptions = {
 
 <%- fragment_cache('footer_common_js', () => {
     let html = '';
-
-    /* vanilla-lazyload */
-    if (theme.vendors.lazyload) {
-        html += `<script src="${theme.vendors.lazyload}" async></script>`
-    } else {
-        html += `<script src="${url_for('lib/vanilla-lazyload/lazyload.min.js')}" async></script>`
-    }
 
     /* Busuanzi */
     if (theme.busuanzi.enable) html += partial('_plugin/busuanzi/import_js');

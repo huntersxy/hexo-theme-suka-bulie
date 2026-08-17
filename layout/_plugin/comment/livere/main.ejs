@@ -1,12 +1,7 @@
-<div id="lv-container" data-id="city" data-uid="<%= theme.comment.livere.data_uid %>">
-    <script id="livere-comment-js">
-    (function(d, s) {
-       var j, e = d.getElementsByTagName(s)[0];
-       if (typeof LivereTower === 'function') { return; }
-       j = d.createElement(s);
-       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-       j.async = true;
-       e.parentNode.insertBefore(j, e);
-    })(document, 'script');
-    </script>
-</div>
+<% if (theme.comment.livere.client_id) { %>
+<!-- LiveRe 新版 Web Component (2025+) -->
+<livere-comment client-id="<%= theme.comment.livere.client_id %>"></livere-comment>
+<script type="module" src="https://www.livere.org/livere-widget.js"></script>
+<% } else { %>
+<!-- Livere 未配置: 在 _config.yml 的 comment.livere.client_id 填入来必力站点 client-id 后生效 -->
+<% } %>

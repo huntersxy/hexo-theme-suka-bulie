@@ -1,0 +1,15 @@
+<article class="gallery">
+    <% if (site.data.gallery) { %>
+        <% for (var i in site.data.gallery) { %>
+            <a class="gallery-link" href="<%= site.data.gallery[i].full %>" title="<%= i %>" data-descr="<%= site.data.gallery[i].descr %>">
+                <figure class="gallery-image">
+                    <img src="<%= site.data.gallery[i].thumb %>" loading="lazy" decoding="async" rel="<%= i %>" alt="<%= i %>">
+                    <figcaption><%= i %><br><small><%= site.data.gallery[i].descr %></small></figcaption>
+                </figure>
+            </a>
+        <% } %>
+    <% } else { %>
+        <p class="text-gray">画廊暂无内容：请在 <code>source/_data/gallery.yml</code> 中添加图片。</p>
+    <% } %>
+</article>
+<script src="<%- url_for('js/gallery.min.js') + '?v=' + theme.verison %>"></script>

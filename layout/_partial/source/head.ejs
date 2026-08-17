@@ -10,11 +10,11 @@
 
     html += partial('_partial/head/config_style');
 
-    /* style.css */
+    /* style.css (带版本号, 主题更新后浏览器自动拉新, 避免旧缓存) */
     if (theme.vendors.suka.style_css) {
         html += `<link rel="stylesheet" href="${theme.vendors.suka.style_css}">`;
     } else {
-        html += `<link rel="stylesheet" href="${url_for('css/style.min.css')}">`;
+        html += `<link rel="stylesheet" href="${url_for('css/style.min.css')}?v=${theme.verison}">`;
     }
 
     return html;
@@ -27,7 +27,7 @@
     <% } %>
 <% } %>
 
-<% if (config.suka_theme.prism.enable) { %>
+<% if (config.suka_bulie.prism.enable) { %>
     <!-- prism.css -->
     <%- partial('_plugin/highlight/prism/common') %>
 <% } %>

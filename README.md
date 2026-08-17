@@ -1,135 +1,102 @@
-![](https://i.loli.net/2018/07/27/5b5b2eee0dc9b.png)
+# hexo-theme-suka-bulie
 
-# <div align="center"><a title="Go to homepage" href="https://theme-suka.skk.moe"><img align="center" alt="S" width="56" height="56" src="https://i.loli.net/2018/07/27/5b5b32fb7963f.png"></a>u k a</div>
-
-> Modern · Powerful · Simple  
-> 现代 · 强大 · 简洁
-
-<p align="center">
-<img alt="Version" src="https://img.shields.io/github/v/release/sukkaw/hexo-theme-suka?color=%235755d9&include_prereleases&label=version&style=flat-square">
-<a href="https://skk.moe" target="_blank"><img alt="Author" src="https://img.shields.io/badge/Author-Sukka-b68469.svg?style=flat-square"/></a>
-<a href="https://hexo.io" target="_blank"><img alt="Hexo" src="https://img.shields.io/badge/hexo-4.0+-0e83cd.svg?style=flat-square"/></a>
-<a href="https://nodejs.org/" target="_blank"><img alt="node.js" src="https://img.shields.io/badge/node.js-10%2B-43853d.svg?style=flat-square"/></a>
-<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/sukkaw/hexo-theme-suka?style=flat-square">
-<br>
-<a href="https://travis-ci.org/SukkaW/hexo-theme-suka"><img alt="Build Status" src="https://img.shields.io/travis/SukkaW/hexo-theme-suka.svg?style=flat-square"/></a>
-<a href="https://www.codacy.com/app/SukkaW/hexo-theme-suka" target="_blank"><img alt="Codacy Badge" src="https://img.shields.io/codacy/grade/273f45610882413aad88396e06bfa6ec.svg?style=flat-square"></a>
-<a href="https://david-dm.org/SukkaW/hexo-theme-suka" target="_blank"><img alt="Dependency Status" src="https://img.shields.io/david/SukkaW/hexo-theme-suka.svg?style=flat-square"></a>
-<a href="https://david-dm.org/SukkaW/hexo-theme-suka#info=devDependencies" target="_blank"><img alt="devDependency Status" src="https://img.shields.io/david/dev/SukkaW/hexo-theme-suka.svg?style=flat-square"></a>
-</p>
-
-## Contents 目录
-
-- [Introduction 简介](#introduction-简介)
-- [Demo 演示](#demo-演示)
-- [Install 安装](#install-安装)
-- [Documents 文档](#documents-文档)
-- [Contributing 贡献](#contributing-贡献)
-- [Changelog 更新日志](#changelog-更新日志)
-- [Todo 计划](#todo-计划)
-- [Maintainer 维护者](#maintainer-维护者)
-- [License 许可证](#license-许可证)
-- [Support 支持](#support-支持)
-- [Render 渲染](#render-渲染)
-
-## Introduction 简介
-
-"Suka", a Modern and Simple Theme for Hexo, with a lot of powerful features.  
-「Suka」，一个拥有许多强大特性的，现代、简洁的 Hexo 主题。
-
-## Demo 演示
-
-- [Sukka's Blog](https://blog.skk.moe)
-- [Suka Theme Demo](https://theme-suka.skk.moe/demo/)
-
-
-## Install 安装
-
-```bash
-$ cd hexo
-$ git clone https://github.com/SukkaW/hexo-theme-suka themes/suka
-$ cat themes/suka/site_config.yml >> _config.yml
-$ cd themes/suka
-$ npm i
-$ cd ..
-$ cd ..
+```text
+ ███    *     *    ███     ████    *     *   █████ █
+█   █   *     *   █   █    █   █   *     *     █   █
+█     ***** ***** █████    ████  ***** *****   █   ████
+█   █   *     *   █   █    █   █   *     *     █   █   █
+ ███    *     *   █   █    ████    *     *     █   ████
 ```
 
-You can also read our [detailed installation instructions](https://theme-suka.skk.moe/docs/en/) if you want any other variant.
+> **с\*\*а б\*\*ть（苏卡不列）** —— 伪和谐了，懂的都懂；主题名捏的就是这个梗 😈
 
-你也可以阅读我们的 [详细安装说明](https://theme-suka.skk.moe/docs/) 了解如何用其他方法下载「Suka」并启用。
+> 本项目是 [SukkaW/hexo-theme-suka](https://github.com/SukkaW/hexo-theme-suka) 的 **huntersxy 自用魔改 Fork**。
+> 主要用于 [https://blog.xiey.work](https://blog.xiey.work)，相对上游改了很多个人化的功能与样式。
 
-## Documents 文档
-
-[Suka Theme Docs](https://theme-suka.skk.moe/docs/en/)
-
-> ATTENTION! The English Version of Docs is still under construction!<br>But do not worry, I wrote the detailed explainations in config file's comment in English. So you can still configure the theme without difficulty. Any problem please feel free to open a new issue.
-
-[Suka 主题文档](https://theme-suka.skk.moe/docs/)
+如果你只是想用原版 Suka，请前往上游仓库：[SukkaW/hexo-theme-suka](https://github.com/SukkaW/hexo-theme-suka)。
 
 ---
 
-[The source code of Docs](https://github.com/theme-suka/docs/)
+## 这个 Fork 改了什么
 
-## Contributing 贡献
+和上游 [SukkaW/hexo-theme-suka](https://github.com/SukkaW/hexo-theme-suka) 相比，主要差异：
 
-All kinds of contributions (enhancements, new features, documentation & code improvements, issues & bugs reporting) are welcome.<br>
-please read the [Dev Guide](https://theme-suka.skk.moe/docs/en/dev/) before you start your contributing.
+- **新增右侧浮动工具栏**（`layout/_partial/right.ejs`）：包含返回顶部、菜单、评论、夜间模式/随机图片等按钮；显示/隐藏为上浮淡入动画，按钮入场级联浮现、悬浮弹性放大。
+- **PJAX 无刷新加载**（`src/js/pjax.js`）：站内链接点击后通过 AJAX 局部刷新 `#pjax-container` 内容，URL 与前进/后退正常，带页面切换过渡动画（淡入淡出+轻微上移，尊重 `prefers-reduced-motion`）、TOC/锚点平滑滚动与文章链接预加载（悬停/触摸/键盘聚焦去抖预取、首屏可见文章链接自动预取），已适配畅言评论、本地搜索、Prism、vanilla-lazyload 与统计插件；可用 `_config.yml` 的 `pjax.enable: false` 关闭，或在链接上加 `data-pjax-ignore`、脚本上加 `data-pjax-skip` 单独跳过。
+- **首页文章卡片**：点击整卡进入文章（卡片内链接/按钮照常）；悬浮轻微上浮动画 + 圆角，可在 `_config.yml` 的 `post_entry` 段调整（`card_click` / `raise` / `radius`）。
+- **全站新增一些组件/效果**：jQuery、线条粒子背景、心知天气组件。
+- **文章页引入右侧浮动工具栏**：原版没有这个侧边栏，现在在文章页等位置显示。
+- **CDN 调整**：不蒜子等资源改用 `fastly.jsdelivr.net`。
+- **搜索域名调整**：Google 搜索的 `sitesearch` 改为个人域名。
+- **新增个人 `_config.yml`**：包含头像、菜单、评论（畅言）、搜索等个人配置。
+- **样式细节调整**：滚动条、卡片阴影、字体等。
+- **工程现代化**：构建工具从 Gulp 换成 esbuild + lightningcss，支持 Hexo 8 / Node.js 20+，并新增 GitHub Actions CI。
 
-欢迎各种形式的贡献，包括但不限于优化，添加功能，文档 & 代码的改进，问题和 bugs 的报告。期待你的 Pull Request。<br>
-在参与贡献之前，请先阅读 [开发指南](https://theme-suka.skk.moe/docs/dev/)。
+> 注意：这是个人自用主题，配置和功能不一定适合所有人；如要使用，请根据自己的博客修改 `_config.yml`。
 
-## Changelog 更新日志
+---
 
-[View our release notes](https://github.com/SukkaW/hexo-theme-suka/releases)<br>
-[阅读我们的更新日志](https://github.com/SukkaW/hexo-theme-suka/releases)
+## 安装到 Hexo
 
-## Todo 计划
+```bash
+# 在 Hexo 站点根目录执行
+git clone https://github.com/huntersxy/hexo-theme-suka-bulie.git themes/suka-bulie
 
-See [Repo's projects](https://github.com/SukkaW/hexo-theme-suka/projects) for details.
+# 将主题必需的站点配置追加到站点 _config.yml
+cat themes/suka-bulie/site_config.yml >> _config.yml
 
-在 [Repo's projects](https://github.com/SukkaW/hexo-theme-suka/projects) 查看关于 Todo 的详细信息
+# 安装主题依赖
+cd themes/suka-bulie
+npm i
+cd ..
+```
 
-> The Todo is written in Chinese
+然后在站点 `_config.yml` 中设置：
 
-## Maintainer 维护者
+```yaml
+theme: suka-bulie
+```
 
-**Suka Theme** © [Sukka](https://github.com/SukkaW), Released under the [GPL-3.0](./LICENSE) License.<br>
-Authored and maintained by Sukka with help from contributors ([list](https://github.com/SukkaW/hexo-theme-suka/contributors)).
+---
 
-> [Personal Website](https://skk.moe) · [Blog](https://blog.skk.moe) · GitHub [@SukkaW](https://github.com/SukkaW) · Telegram Channel [@SukkaChannel](https://t.me/SukkaChannel) · Twitter [@isukkaw](https://twitter.com/isukkaw) · Keybase [@sukka](https://keybase.io/sukka)
+## 本地开发 / 构建
 
-<p align="center">
-  <a href="https://github.com/sponsors/SukkaW/">
-    <img src="https://sponsor.cdn.skk.moe/sponsors.svg"/>
-  </a>
-</p>
+需要 Node.js `>=20.19.0`。
 
-## License 许可证
+```bash
+npm install
+npm run build   # 使用 esbuild + lightningcss 重新生成 source 下的压缩资源
+npm run lint    # EJS / CSS / JS 检查
+```
 
-[![license](https://img.shields.io/github/license/sukkaw/hexo-theme-suka.svg?style=flat-square)](./LICENSE)
+---
 
-Open sourced under the GPL v3.0 license.
+## 更新主题
 
-根据 GPL V3.0 许可证开源。
+### 手动更新
 
-## Support 支持
+```bash
+cd themes/suka-bulie
+git pull origin master
+```
 
-[![jsdelivr.png](https://i.loli.net/2018/07/27/5b5b29e9a9820.png)](https://www.jsdelivr.com)
+### 自动同步到博客（推送驱动）
 
-> jsDelivr – Open Source CDN. free, fast, and reliable
+博客仓库 [`huntersxy/blog`](https://github.com/huntersxy/blog) 的部署工作流 `.github/workflows/deply.yml` **在每次构建前自动拉取本仓库 `master` 的最新主题**，再编译部署 —— 无定时轮询，博客侧任何推送（发文章/改配置）都会带上最新主题。
 
-Thanks jsDelivr for providing Public CDN service.
+本仓库还提供了 `.github/workflows/notify-blog.yml`，在推送本仓库后通过 `repository_dispatch` **即时**触发博客重新部署：
 
-[![](https://data.jsdelivr.com/v1/package/gh/sukkaw/hexo-theme-suka/badge)](https://www.jsdelivr.com/package/gh/sukkaw/hexo-theme-suka)
+1. 在 GitHub 上创建一个 Personal Access Token（或者 Fine-grained token），授予对 `huntersxy/blog` 仓库的 **Contents 读写**权限（经典 token 勾选 `repo` 即可）。
+2. 在本仓库 `Settings -> Secrets and variables -> Actions` 中新增 Secret，名称必须为 `BLOG_REPO_TOKEN`，值为上面创建的 Token。
+3. 之后每次向本仓库 `master` 推送，Action 会向博客发送 `repository_dispatch` 事件，触发博客立即更新主题。
 
+> 以后只需要维护本仓库（主题分支），不需要再手动更新博客里的主题。
+> 博客同步提交到 `main` 后，会触发现有部署 Action，站点也会自动重新生成。
 
-<a href="https://picturepan2.github.io/spectre">
-  <img src="https://picturepan2.github.io/spectre/img/spectre-logo.svg" width="72" height="72">
-</a>
+---
 
-> Spectre.css is a lightweight, responsive and modern CSS framework.
+## 上游与 License
 
-## Render 渲染
-
-![](https://i.loli.net/2018/07/27/5b5b2b53359fc.png)
+- 上游：[SukkaW/hexo-theme-suka](https://github.com/SukkaW/hexo-theme-suka)
+- 主题文档：<https://theme-suka.skk.moe/docs/>
+- License：本主题沿用上游的 [GPL-3.0](./LICENSE)。

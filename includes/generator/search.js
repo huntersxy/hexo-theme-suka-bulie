@@ -1,12 +1,12 @@
 module.exports = function (hexo) {
-    if (hexo.config.suka_theme.search.enable !== true) {
+    if (hexo.config.suka_bulie.search.enable !== true) {
         return;
     }
 
     const pathFn = require('path');
     const { stripHTML } = require('hexo-util');
 
-    let config = hexo.config.suka_theme.search;
+    let config = hexo.config.suka_bulie.search;
 
     // Set default search path
     if (!config.path) config.path = 'search.json';

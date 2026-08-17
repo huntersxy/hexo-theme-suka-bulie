@@ -20,25 +20,6 @@
         opacity: 1;
     }
 
-    <% if (theme.uiux.lazy_padding_bottom) { %>
-    #post-content img.lazyload {
-        transition: filter .35s ease 0s;
-    }
-
-    #post-content img.lazyload:not(.loaded) {
-        -webkit-filter: blur(5px);
-        filter: blur(5px);
-    }
-
-    #post-content img.lazyload:not(.loaded):not(.loading) {
-        padding-bottom: <%= theme.uiux.lazy_padding_bottom %>;
-    }
-
-    #post-content img.lazyload.error {
-        display: none
-    }
-    <% } %>
-
     .post-entry .card-body a {
         color: <% if (theme.uiux.primary_color) { %><%= theme.uiux.primary_color %><% } else { %>#0070ff<% } %>;
     }
@@ -80,4 +61,33 @@
         background: <% if (theme.uiux.bg_color) { %><%= theme.uiux.bg_color %><% } else { %>#f8f9fa<% } %>;
         opacity: .85;
     }
+
+    <% if (theme.post_entry) { %>
+    /* 卡片圆角 (首页卡片/文章卡片/画廊/友链等), 由 _config.yml 的 post_entry.radius 控制 */
+    body {
+        --card-radius: <%= theme.post_entry.radius !== undefined ? theme.post_entry.radius : 0 %>px;
+        --post-entry-raise: <%= theme.post_entry.raise !== undefined ? theme.post_entry.raise : 0 %>;
+    }
+    <% } %>
+
+    <% if (theme.comment && theme.comment.use === 'livere') { %>
+    /* 来必力评论融入主题: 组件为 Shadow DOM, 通过 CSS 变量穿透定制 */
+    livere-comment {
+        --livere-primary: <% if (theme.uiux.primary_color) { %><%= theme.uiux.primary_color %><% } else { %>#0070ff<% } %>;
+        --livere-bg: <% if (theme.uiux.bg_color) { %><%= theme.uiux.bg_color %><% } else { %>#f8f9fa<% } %>;
+        --livere-line: #e5e7eb;
+        --livere-popup-line: #e5e7eb;
+        --background: #fff;
+        --border-color: #e5e7eb;
+        --input-border-color: #d5d9e0;
+        --input-font-color: #50596c;
+        --input-placeholder-color: #acb3c2;
+        --button-hover-background: <% if (theme.uiux.primary_color) { %>color-mix(in srgb, <%= theme.uiux.primary_color %> 88%, #fff)<% } else { %>#2b7fff<% } %>;
+        --button-active-background: <% if (theme.uiux.primary_color) { %><%= theme.uiux.primary_color %><% } else { %>#0070ff<% } %>;
+        --indicator-color: <% if (theme.uiux.primary_color) { %><%= theme.uiux.primary_color %><% } else { %>#0070ff<% } %>;
+        --outline-color: <% if (theme.uiux.primary_color) { %><%= theme.uiux.primary_color %><% } else { %>#0070ff<% } %>;
+        --category-font-color: #acb3c2;
+        --skintone-border-radius: .5rem;
+    }
+    <% } %>
 </style>

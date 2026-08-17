@@ -83,6 +83,14 @@ img:
   avatar: '/img/default_avatar.png'
 
 # ---------------------------------------------------------------
+# Dark Mode 暗色模式
+# ---------------------------------------------------------------
+# 跟随系统 (prefers-color-scheme) 自动切换, 右下角工具栏按钮手动切换,
+# 选择记忆在 localStorage (suka-dark-mode), 未手动选择时随系统实时切换。
+dark_mode:
+  enable: true
+
+# ---------------------------------------------------------------
 # Menu Settings
 # ---------------------------------------------------------------
 # Nav settings
@@ -219,7 +227,6 @@ comment:
 # Site Analytics
 # Suka theme has a built in Baidu's, Google's website analytics and CNZZ's analytics service
 analytics:
-  google_site_id:
   gtags_site_id:
   baidu_site_id:
   cnzz_site_id:
@@ -274,6 +281,23 @@ valine_counter:
     after: # html tag supported
 
 # ---------------------------------------------------------------
+# PJAX 无刷新加载
+# ---------------------------------------------------------------
+# 开启后, 点击站内链接将通过 AJAX 获取页面并局部刷新内容,
+# 地址栏 URL 同步变化, 浏览器前进/后退可用, 页面不整页刷新。
+pjax:
+  enable: true
+  # 需要局部刷新的容器选择器 (与 layout/layout.ejs 中的 #pjax-container 对应)
+  container: '#pjax-container'
+  # 命中这些选择器的链接不做 PJAX 处理, 走普通整页跳转
+  exclude:
+    # - '.post-comment a'
+  # 请求超时时间 (毫秒), 超时后自动回退为整页跳转
+  timeout: 10000
+  # 会话内页面缓存数量上限 (0 表示不缓存)
+  cache: 20
+
+# ---------------------------------------------------------------
 # Plugin Settings
 # ---------------------------------------------------------------
 # Search
@@ -325,7 +349,7 @@ hanabi:
 #
 # Then you need to disable other code hightlight first, and enable prism at site config:
 #
-#     suka_theme:
+#     suka_bulie:
 #       ...
 #       prism:
 #         enable: true
@@ -376,7 +400,6 @@ vendors:
     hanabi_browser_js:
     highlight_theme:
     # You can fill in any suka built in highlight.js theme you want here, and it will override the prism theme config before.
-  lazyload_img:
   # Spectre.css
   # https://picturepan2.github.io/spectre/
   # Version: 0.5.3
@@ -389,10 +412,6 @@ vendors:
     theme:
     # You can fill in any prism theme you want here, and it will override the prism theme config in site config.
     line_number:
-  # Lazyload
-  # https://github.com/verlok/lazyload
-  # Version: 8.9.0
-  lazyload:
   # Busuanzi
   # https://busuanzi.ibruce.info
   busuanzi:
@@ -412,7 +431,7 @@ vendors:
 fragment_cache: false
 # Theme Version
 #   localStorage cache version
-verison: 1.3.3
+verison: 1.4.0
 old_verison:
   - 0.2.0
   - 0.0.1

@@ -1,4 +1,5 @@
-const logger = require('hexo-log')();
+const loggerFactory = require('hexo-log');
+const logger = typeof loggerFactory === 'function' ? loggerFactory() : loggerFactory.logger();
 
 logger.info(`--------------------------------------------------------
  ____        _           _____ _

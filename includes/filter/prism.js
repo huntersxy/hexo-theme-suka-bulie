@@ -8,13 +8,14 @@
 
 module.exports = function (hexo) {
     // Plugin settings
-    const config = hexo.config.suka_theme.prism;
+    const config = hexo.config.suka_bulie.prism;
 
     if (config.enable !== true) {
         return;
     }
 
-    const Prism = require('node-prismjs');
+    const Prism = require('prismjs');
+    require('prismjs/components/')();
 
     const map = {
         '&#39;': '\'',

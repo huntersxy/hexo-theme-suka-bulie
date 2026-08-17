@@ -5,4 +5,8 @@
     var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(hm, s);
     })();
+    // PJAX 无刷新跳转后补充页面浏览统计
+    document.addEventListener('pjax:end', function () {
+        _hmt.push(['_trackPageview', location.pathname + location.search]);
+    });
 </script>

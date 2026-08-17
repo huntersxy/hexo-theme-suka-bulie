@@ -1,25 +1,17 @@
 {
-    "assignees": [
-        "SukkaW"
-    ],
-    "extends": [
-        "config:base"
-    ],
-    "vulnerabilityAlerts": {
-        "labels": [
-            "security"
-        ],
-        "assignees": [
-            "SukkaW"
-        ]
-    },
-    "reviewers": [
-        "SukkaW"
-    ],
-    "baseBranches": [
-        "canary"
-    ],
-    "commitMessageAction": "update",
-    "semanticCommits": true,
-    "semanticCommitType": "chore"
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "assignees": [
+    "huntersxy"
+  ],
+  "reviewers": [
+    "huntersxy"
+  ],
+  "baseBranches": [
+    "master"
+  ],
+  "semanticCommits": "enabled",
+  "semanticCommitType": "chore"
 }

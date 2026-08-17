@@ -2,7 +2,7 @@
 
 <!-- busuanzi -->
 <% if (theme.busuanzi.enable) { %>
-    <link rel="dns-prefetch" href="//busuanzi.ibruce.info">
+    <link rel="preconnect" href="https://busuanzi.ibruce.info" crossorigin>
 <% } %>
 
 <!-- comment -->
@@ -22,7 +22,8 @@
     <link rel="dns-prefetch" href="//api.github.com">
 <% } %>
 <% if (theme.comment.use === "livere") { %>
-    <link rel="dns-prefetch" href="//cdn-city.livere.com">
+    <link rel="preconnect" href="https://cdn-city.livere.com" crossorigin>
+    <link rel="preconnect" href="https://www.livere.org" crossorigin>
 <% } %>
 <% if (theme.comment.use === "valine") { %>
     <link rel="dns-prefetch" href="//cdn1.lncld.net">
@@ -31,9 +32,6 @@
 <!-- analytics -->
 <% if (theme.analytics.baidu_site_id) { %>
     <link rel="dns-prefetch" href="//hm.baidu.com">
-<% } %>
-<% if (theme.analytics.google_site_id) { %>
-    <link rel="dns-prefetch" href="//www.google-analytics.com">
 <% } %>
 <% if (theme.analytics.gtags_site_id) { %>
     <link rel="dns-prefetch" href="//www.googletagmanager.com">

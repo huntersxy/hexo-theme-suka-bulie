@@ -5,4 +5,8 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', '<%= theme.analytics.gtags_site_id %>');
+    // PJAX 无刷新跳转后补充页面浏览统计
+    document.addEventListener('pjax:end', function () {
+        gtag('config', '<%= theme.analytics.gtags_site_id %>', { page_path: location.pathname + location.search });
+    });
 </script>

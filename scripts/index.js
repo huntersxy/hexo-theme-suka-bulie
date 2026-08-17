@@ -7,8 +7,9 @@ require('../includes/tasks/check_hexo')(hexo);
 // Check required dependencies
 require('../includes/tasks/check_deps');
 
-const logger = require('hexo-log')();
-logger.info('Loading Suka Theme Plugins');
+const loggerFactory = require('hexo-log');
+const logger = typeof loggerFactory === 'function' ? loggerFactory() : loggerFactory.logger();
+logger.info('Loading Suka-bulie Theme Plugins');
 
 // Helper
 require('../includes/helpers/page')(hexo);
@@ -21,6 +22,7 @@ require('../includes/generator/search')(hexo);
 
 // Filter
 require('../includes/filter/prism')(hexo);
+require('../includes/filter/lazyload')(hexo);
 
 // Debug helper
 hexo.extend.helper.register('console', function () {

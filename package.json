@@ -1,41 +1,45 @@
 {
-  "name": "hexo-theme-suka",
-  "version": "1.3.3",
-  "description": "Modern, powerful and simple theme for Hexo",
+  "name": "hexo-theme-suka-bulie",
+  "version": "2.0.0",
+  "description": "huntersxy 自用魔改的 Suka Hexo 主题，已进行现代化升级",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "setup": "npm cache clean && npm install",
-    "lint": "bash lint.sh"
+    "build": "node build.js",
+    "lint": "bash lint.sh",
+    "setup": "npm install",
+    "test": "npm run lint && npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SukkaW/hexo-theme-suka.git"
+    "url": "git+https://github.com/huntersxy/hexo-theme-suka-bulie.git"
   },
   "keywords": [
     "hexo",
     "hexo-theme",
     "suka",
-    "sukkaw"
+    "sukkaw",
+    "suka-bulie"
   ],
-  "author": "SukkaW",
+  "author": "huntersxy",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/SukkaW/hexo-theme-suka/issues"
+    "url": "https://github.com/huntersxy/hexo-theme-suka-bulie/issues"
   },
-  "homepage": "https://github.com/SukkaW/hexo-theme-suka#readme",
+  "homepage": "https://github.com/huntersxy/hexo-theme-suka-bulie#readme",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "devDependencies": {
-    "ejs-lint": "0.3.0",
-    "eslint": "6.5.1",
-    "gulp": "4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
-    "gulp-clean-css": "4.2.0",
-    "gulp-rename": "1.4.0",
-    "gulp-uglify": "3.0.2",
-    "sass-lint": "1.13.1"
+    "@eslint/js": "^9.39.5",
+    "browserslist": "^4.28.8",
+    "ejs-lint": "^2.0.1",
+    "esbuild": "^0.28.2",
+    "eslint": "^9.39.5",
+    "lightningcss": "^1.33.0",
+    "stylelint": "^17.14.1",
+    "stylelint-config-standard": "^40.0.0"
   },
   "dependencies": {
-    "node-prismjs": "0.1.2",
-    "prismjs": "^1.17.1",
+    "prismjs": "^1.30.0",
     "qr-image": "3.2.0"
   }
 }
