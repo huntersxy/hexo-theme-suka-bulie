@@ -233,15 +233,16 @@ header {
 }
 
 header a {
-    color: #50596c;
+    color: #2f3b4d;
     text-decoration: none;
+    text-shadow: 0 1px 2px rgb(255 255 255 / .65);
 }
 
 header a:hover,
 header a:focus,
 header a:visited {
     text-decoration: none;
-    color: #50596c;
+    color: #1f2b3b;
 }
 
 header .divider {
@@ -256,7 +257,9 @@ header .divider {
 }
 
 .header-slogan {
-    font-size: .8rem
+    color: #3f4c60;
+    font-size: .8rem;
+    text-shadow: 0 1px 2px rgb(255 255 255 / .65);
 }
 
 @media (min-width: 481px) {
@@ -279,14 +282,61 @@ header .divider {
     }
 }
 
+/* 内页页头：标题与标语收起，导航抬升为普通网站导航栏 */
+
+header {
+    transition: padding .42s cubic-bezier(.22, 1, .36, 1);
+}
+
+.header-title,
+.header-slogan {
+    max-height: 4rem;
+    overflow: hidden;
+    transition: max-height .36s ease, margin .36s ease, opacity .28s ease, transform .36s ease;
+}
+
+.navbar-section {
+    transition: transform .42s cubic-bezier(.22, 1, .36, 1);
+}
+
+body.site-inner header {
+    padding-top: .8rem;
+    padding-bottom: .9rem;
+}
+
+body.site-inner .header-title,
+body.site-inner .header-slogan {
+    max-height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    transform: translateY(-.65rem);
+    pointer-events: none;
+}
+
+body.site-inner .navbar-section {
+    transform: translateY(-.05rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    header,
+    .header-title,
+    .header-slogan,
+    .navbar-section {
+        transition: none !important;
+    }
+}
+
 .navbar-link {
     padding: .35rem .4rem;
 }
 
 .page-title {
-    font-size: 1.2rem;
-    text-align: center;
-    margin-bottom: 1rem;
+    margin: 0;
+    color: #50596c;
+    font-size: 1.35rem;
+    font-weight: 500;
+    line-height: 1.35;
 }
 
 /**
@@ -334,6 +384,66 @@ header .divider {
 
 .post-stream-container {
     width: 100%;
+}
+
+/* 独立页面：保持背景通透，仅让内容单元使用轻量表面 */
+
+.page-main {
+    padding-top: .8rem;
+    padding-bottom: .5rem;
+}
+
+.page-card {
+    margin: .8rem 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.page-heading {
+    padding: .1rem .2rem 1rem;
+    text-align: center;
+    text-shadow: 0 1px 3px rgb(255 255 255 / .8);
+}
+
+.page-heading .page-title {
+    display: inline-block;
+}
+
+.page-subtitle {
+    margin: .35rem 0 0;
+    color: #58667a;
+    font-size: .75rem;
+    line-height: 1.5;
+}
+
+.page-empty {
+    margin: 1rem 0 .4rem;
+    color: #4d5b70;
+    text-align: center;
+    text-shadow: 0 1px 3px rgb(255 255 255 / .8);
+}
+
+.page-card .text-gray,
+.page-card .tile-subtitle {
+    color: #667189 !important;
+}
+
+.page-card a {
+    color: #2f6fbd;
+}
+
+.page-card a:hover,
+.page-card a:focus {
+    color: #1d4f8f;
+}
+
+@media screen and (max-width: 480px) {
+    .page-heading {
+        padding-right: 0;
+        padding-left: 0;
+    }
 }
 
 .pagination .page-item i {
@@ -1158,13 +1268,14 @@ a.category-link {
 footer {
     padding: 1.5rem 1.2rem 1.2rem;
     font-size: .75rem;
-    color: #999;
+    color: #596579;
+    text-shadow: 0 1px 2px rgb(255 255 255 / .65);
 }
 
 .footer-copyright-a,
 .footer-copyright-a:visited {
     text-decoration: none;
-    color: #999;
+    color: #596579;
 }
 
 .footer-copyright-a:hover,
@@ -1174,12 +1285,12 @@ footer {
 }
 
 .footer-text a {
-    color: #999;
+    color: #596579;
 }
 
 .footer-develop-a,
 .footer-develop-a:visited {
-    color: #6b6b6b;
+    color: #4f5d70;
 }
 
 .footer-develop-a:hover,
@@ -1202,16 +1313,9 @@ footer {
  */
 
 .tagscloud {
-    margin: 0 0 2rem;
-    padding: 1.5rem 1rem;
+    padding: .4rem .2rem .1rem;
     text-align: center;
     line-height: 2.4;
-    background: rgb(255 255 255 / .8);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-radius: .6rem;
-    border: 1px solid rgb(255 255 255 / .6);
-    box-shadow: 0 2px 12px rgb(0 0 0 / .08);
 }
 
 .tagscloud a {
@@ -1222,12 +1326,15 @@ footer {
     border-radius: 2rem;
     white-space: nowrap;
     transition: all .25s ease;
-    background: rgb(0 0 0 / .05);
+    border: 1px solid rgb(255 255 255 / .32);
+    background: rgb(255 255 255 / .42);
     color: #2e3440;
+    box-shadow: 0 2px 8px rgb(0 0 0 / .06);
 }
 
 .tagscloud a:hover {
-    background: rgb(0 0 0 / .12);
+    border-color: rgb(255 255 255 / .62);
+    background: rgb(255 255 255 / .62);
     transform: translateY(-2px);
     box-shadow: 0 2px 8px rgb(0 0 0 / .1);
 }
@@ -1293,6 +1400,59 @@ footer {
 
 .timeline .timeline-item .timeline-icon.icon-lg::before {
     content: none;
+}
+
+.archive-page .page-heading {
+    border-bottom: 1px solid #edf0f3;
+}
+
+.archive-page .timeline {
+    margin-top: 1rem;
+}
+
+.archive-page .timeline .timeline-item {
+    margin-bottom: .55rem;
+}
+
+.archive-page .timeline .timeline-content {
+    padding-top: .1rem;
+    padding-bottom: .1rem;
+}
+
+.archive-page .timeline .tile {
+    padding: .2rem .4rem;
+    border: 1px solid rgb(255 255 255 / .28);
+    border-radius: .35rem;
+    background: rgb(255 255 255 / .34);
+    backdrop-filter: blur(4px);
+    transition: background-color .2s ease, border-color .2s ease;
+}
+
+.archive-page .timeline .timeline-item:not(.timeline-year) .tile:hover {
+    border-color: rgb(255 255 255 / .55);
+    background: rgb(255 255 255 / .52);
+}
+
+.archive-page .timeline .timeline-year {
+    margin-top: .25rem;
+    margin-bottom: .3rem;
+}
+
+.archive-page .timeline .timeline-year .tile {
+    padding-top: .35rem;
+    padding-bottom: .35rem;
+    background: rgb(255 255 255 / .48);
+}
+
+.archive-page .timeline .timeline-year .tile-title {
+    color: #50596c;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.archive-page .timeline .tile-subtitle {
+    display: inline-block;
+    min-width: 2.9rem;
 }
 
 /**
@@ -1466,17 +1626,25 @@ a.timeline-tile-title span:hover {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: .4rem;
-    padding: 0;
+    gap: .8rem;
+    padding: .2rem 0;
 }
 
 .link-item {
-    box-shadow: 0 1px 1.5px 1px rgb(0, 0, 0, .12);
-    transition: all .3s;
+    width: 100%;
+    max-width: 15rem;
     height: 3.8rem;
-    width: 15rem;
-    border-radius: var(--card-radius, 0);
     overflow: hidden;
+    border-radius: var(--card-radius, 10px);
+    box-shadow: 0 1px 1.5px 1px rgb(0 0 0 / .12);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+@media (hover: hover) {
+    .link-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgb(0 0 0 / .14);
+    }
 }
 
 .link-item a,
@@ -1512,12 +1680,9 @@ a.timeline-tile-title span:hover {
 
 .gallery {
     display: grid;
-
-    /* 固定列宽 (200-240px), 不用 1fr 拉伸, 行未满时整体居中 */
-    grid-template-columns: repeat(auto-fill, minmax(200px, 240px));
-    justify-content: center;
-    gap: 1rem;
-    padding: 1rem 0;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.5rem), 1fr));
+    gap: .8rem;
+    padding: .2rem 0 0;
 }
 
 .gallery-link {
@@ -1623,7 +1788,13 @@ a.timeline-tile-title span:hover {
 [data-theme="dark"] header a:hover,
 [data-theme="dark"] header a:focus,
 [data-theme="dark"] header a:visited {
-    color: #aab6c5;
+    color: #d6dee9;
+    text-shadow: none;
+}
+
+[data-theme="dark"] .header-slogan,
+[data-theme="dark"] footer {
+    text-shadow: none;
 }
 
 /* 卡片与浮层 (Spectre .card 默认白底) */
@@ -1632,6 +1803,46 @@ a.timeline-tile-title span:hover {
 [data-theme="dark"] #post-card .card-footer.post-comment,
 [data-theme="dark"] .gallery-link {
     background-color: var(--dm-surface);
+}
+
+[data-theme="dark"] .page-card {
+    background-color: transparent;
+}
+
+[data-theme="dark"] .page-title,
+[data-theme="dark"] .archive-page .timeline .timeline-year .tile-title {
+    color: var(--dm-text);
+}
+
+[data-theme="dark"] .page-subtitle,
+[data-theme="dark"] .page-empty {
+    color: var(--dm-text-2);
+    text-shadow: none;
+}
+
+[data-theme="dark"] .archive-page .page-heading {
+    border-bottom-color: var(--dm-border);
+}
+
+[data-theme="dark"] .archive-page .timeline .tile {
+    border-color: rgb(255 255 255 / .08);
+    background: rgb(22 29 39 / .54);
+}
+
+[data-theme="dark"] .archive-page .timeline .timeline-item:not(.timeline-year) .tile:hover {
+    border-color: rgb(255 255 255 / .16);
+    background: var(--dm-surface-2);
+}
+
+[data-theme="dark"] .tagscloud a {
+    border-color: rgb(255 255 255 / .1);
+    background: rgb(22 29 39 / .58);
+    color: var(--dm-text);
+    box-shadow: none;
+}
+
+[data-theme="dark"] .tagscloud a:hover {
+    background: var(--dm-surface-2);
 }
 
 [data-theme="dark"] .dropdown .menu,

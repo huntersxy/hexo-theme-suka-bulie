@@ -50,6 +50,27 @@
         return url.pathname + url.search;
     }
 
+    // 同步页头状态：首页保留站点标题与标语，内页收缩为普通导航栏。
+    function syncHeaderState(url) {
+        var homeLink = document.querySelector('header .header-title a');
+        if (!homeLink || !document.body) return;
+
+        var rootPath;
+        var path;
+        try {
+            rootPath = new URL(homeLink.href, location.href).pathname;
+            path = (url instanceof URL ? url : new URL(url || location.href, location.href)).pathname;
+        } catch (e) {
+            return;
+        }
+
+        rootPath = rootPath.replace(/\/+$/, '') || '/';
+        path = path.replace(/\/+$/, '') || '/';
+        var isHome = path === rootPath || path === rootPath + '/index.html';
+        document.body.classList.toggle('site-home', isHome);
+        document.body.classList.toggle('site-inner', !isHome);
+    }
+
     function fire(name, detail) {
         var evt;
         try {
@@ -277,6 +298,7 @@
             } catch (e) { /* 受限环境 (如 file://) 忽略 */ }
         }
         currentKey = key;
+        syncHeaderState(url);
 
         var seq = ++applySeq;
         var commit = function () {
@@ -662,6 +684,7 @@
         }
 
         loading = true;
+        syncHeaderState(url);
         fire('pjax:start', { url: url.href });
         showBar();
 
@@ -698,6 +721,7 @@
         createBar();
         injectTransitionStyle();
         currentKey = keyOf(new URL(location.href));
+        syncHeaderState(location.href);
 
         // 首次加载也执行重初始化 (如 Prism 高亮、预取扫描)
         reinit(container);

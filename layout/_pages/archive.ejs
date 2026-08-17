@@ -1,27 +1,15 @@
-<div class="container">
-    <div class="main-container">
-        <main>
+<div class="container page-container">
+    <div class="main-container page-main">
+        <main class="page-card archive-page">
+            <div class="page-heading">
+                <h1 class="page-title"><%= __('archive') %></h1>
+                <p class="page-subtitle"><%= __('counter.archive', site.posts.length) %></p>
+            </div>
 
             <div class="timeline">
-
-                <div class="timeline-item">
-                    <div class="timeline-left">
-                        <div class="timeline-icon"></div>
-                    </div>
-                    <div class="timeline-content">
-                        <div class="tile">
-                            <div class="tile-content">
-                                <p class="tile-title">
-                                    <%= __('counter.archive', site.posts.length) %>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <% function buildArchive(posts, year, month = null) {
                     const time = moment([page.year, (page.month) ? page.month - 1 : null].filter(i => i !== null)); %>
-                    <div class="timeline-item">
+                    <div class="timeline-item timeline-year">
                         <div class="timeline-left">
                             <div class="timeline-icon icon-lg"></div>
                         </div>
@@ -60,7 +48,6 @@
                     <%- buildArchive(page.posts, page.year, page.month) %>
                 <% } %>
             </div>
-
         </main>
         <%- partial('_partial/pagination') %>
     </div>

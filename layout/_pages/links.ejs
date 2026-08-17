@@ -1,15 +1,19 @@
-<div class="container">
-    <div class="main-container">
-        <main>
+<div class="container page-container">
+    <div class="main-container page-main">
+        <main class="page-card links-page">
+            <div class="page-heading">
+                <h1 class="page-title"><%= page.title || '友情链接' %></h1>
+                <p class="page-subtitle">记录值得访问的站点与朋友</p>
+            </div>
             <% if (site.data.links) { %>
                 <div class="link-list">
                 <% for (const i in site.data.links) { %>
                     <div class="link-item">
-                        <a href="<%= site.data.links[i].url %>" title="<%= i %>" target="_blank">
+                        <a href="<%= site.data.links[i].url %>" title="<%= i %>" target="_blank" rel="noopener noreferrer">
                             <div class="card">
                                 <div class="tile tile-centered">
                                     <div class="link-img">
-                                        <img src="<%= site.data.links[i].img %>" alt="<%= i %>">
+                                        <img src="<%= site.data.links[i].img %>" alt="<%= i %>" loading="lazy" decoding="async">
                                     </div>
                                     <div class="tile-content link-content">
                                         <div class="tile-title link-title"><%= i %></div>
@@ -21,6 +25,8 @@
                     </div>
                 <% } %>
                 </div>
+            <% } else { %>
+                <p class="page-empty">暂无友链，欢迎稍后再来。</p>
             <% } %>
         </main>
     </div>
