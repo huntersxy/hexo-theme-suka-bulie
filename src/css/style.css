@@ -1712,6 +1712,7 @@ a.timeline-tile-title span:hover {
     object-fit: cover;   /* 裁切填充, 避免拉伸变形 */
 }
 
+
 .gallery-image figcaption {
     padding: .5rem .7rem;
     font-size: .8rem;
@@ -2177,6 +2178,7 @@ a.timeline-tile-title span:hover {
 [data-theme="dark"] .gallery-image figcaption {
     color: #aab6c5;
 }
+
 
 [data-theme="dark"] .gallery-image figcaption small {
     color: #7d8797;

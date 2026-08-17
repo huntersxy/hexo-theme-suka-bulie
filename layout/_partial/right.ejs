@@ -13,7 +13,7 @@
             </use>
         </svg>
     </a>
-    <a onclick="SiderMenu()" target="_self">
+    <a id="settings-toggle" onclick="toggleSukaSettings()" target="_self" title="设置" aria-label="打开设置" aria-expanded="false">
         <svg style=" width: 1.5em;height: 1.5em;" class="icon" aria-hidden="true">
             <use xlink:href="#icon-caidanfenlei">
                 <svg id="icon-caidanfenlei" viewBox="0 0 1024 1024">
@@ -36,7 +36,7 @@
             </use>
         </svg>
     </a>
-    <a id="say" href="#vcomments" target="_self">
+    <a id="say" class="<%= is_post() ? '' : 'is-page-hidden' %>" href="#vcomments" target="_self" title="评论" aria-label="评论">
         <svg style=" width: 1.5em;height: 1.5em;" class="icon" aria-hidden="true">
             <use xlink:href="#icon-ketangtaolun">
                 <svg id="icon-ketangtaolun" viewBox="0 0 1234 1024">
@@ -59,12 +59,7 @@
             </use>
         </svg>
     </a>
-    <a onclick="switchNightMode()">
-        <svg style=" width: 1.5em;height: 1.5em;" class="icon" aria-hidden="true">
-            <use id="modeicon" xlink:href="#icon-_moon">
-            </use>
-        </svg>
-    </a>
+
     <% if (theme.dark_mode && theme.dark_mode.enable !== false) { %>
     <a id="dark-mode-toggle" onclick="toggleDarkMode()" title="切换亮暗模式" aria-label="切换亮暗模式">
         <svg class="dm-icon dm-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -139,30 +134,29 @@
         </symbol>
     </svg>
 
-    <a onclick="music_on();" id="musicmobbtn">
-        <svg style=" width: 1.5em;height: 1.5em;" class="icon" aria-hidden="true">
-            <use id="modeicon" xlink:href="#icon-icon-music">
-                <svg id="icon-icon-music" viewBox="0 0 1024 1024">
-                    <path
-                        d="M997.45185173 512A485.45185173 485.45185173 0 1 1 26.54814827 512a485.45185173 485.45185173 0 0 1 970.90370346 0"
-                        fill="#9025FC"></path>
-                    <path
-                        d="M478.56450347 602.59745173S403.9869632 545.19277013 369.03442987 537.78962987c-82.1020448-17.41558507-136.47265173 35.8020736-133.37789654 106.192592 4.36906667 100.42785173 127.37042987 123.85090347 194.66619307 111.3505184 67.3564448-12.37902187 101.09534827-57.04059307 108.86257707-111.83597014 7.76722987-54.79537813 46.84610347-263.9037632 46.84610346-263.9037632s66.26417813 61.28829653 85.2574816 82.3447712c26.4571264 29.3698368-0.1820448 79.85682987-0.18204373 79.8568288s72.39300693-12.07561493 90.23336213-104.97896213c12.31834027-64.1403264-23.36237013-76.64071147-65.71804373-110.37961493-82.76954027-65.7787264-121.2416-90.2940448-145.63555627-95.45197014-24.27259307-5.0972448-45.02565973 4.42974827-45.8145184 81.4952288-0.84954027 77.0654816-25.60758507 290.1181632-25.60758506 290.1181632"
-                        fill="#FFFFFF"></path>
-                </svg>
-            </use>
-        </svg>
-    </a>
-    <audio id="bg_music" src="" loop="loop"></audio>
+</div>
+
+<div id="suka-settings" class="suka-settings" aria-hidden="true">
+    <div class="suka-settings-backdrop" data-settings-close></div>
+    <section class="suka-settings-panel" role="dialog" aria-modal="true" aria-labelledby="suka-settings-title">
+        <div class="suka-settings-header">
+            <h2 id="suka-settings-title">设置</h2>
+            <button type="button" class="suka-settings-close" data-settings-close aria-label="关闭设置">×</button>
+        </div>
+        <label class="suka-setting-row">
+            <span>背景粒子特效</span>
+            <input id="setting-particles" type="checkbox">
+            <span class="suka-setting-switch" aria-hidden="true"></span>
+        </label>
+        <label class="suka-setting-row">
+            <span>左上角天气</span>
+            <input id="setting-weather" type="checkbox">
+            <span class="suka-setting-switch" aria-hidden="true"></span>
+        </label>
+    </section>
 </div>
 
 <script>
-    function music_on() {
-        alert("播放；Cyberangel-Hanser");
-        var audio = new Audio('http://music.163.com/song/media/outer/url?id=1375725396.mp3');
-        audio.play();
-    }
-
     function BackTOP() {
         // PJAX 无刷新加载: 脚本会随页面内容重复执行, 这里用标记保证只绑定一次
         if (window.__sukaBackTopInited) return;
@@ -194,39 +188,78 @@
         });
     }
 
-    function SiderMenu() {
-        alert("我还没做功能");
+    function syncCommentButton() {
+        var button = document.getElementById('say');
+        if (!button) return;
+        button.classList.toggle('is-page-hidden', !document.querySelector('#post-card'));
     }
 
-    function switchNightMode2() {
-        var imageUrl = "https://api.likepoems.com/img/pixiv"; // 替换为你想要显示的图片地址
-         var windowFeatures = "width=400,height=300,top=100,left=100"; // 设置窗口大小和位置等参数
-         window.open(imageUrl, "floatingWindow", windowFeatures);
-
+    function readSukaSetting(name, fallback) {
+        try {
+            var value = localStorage.getItem('suka-setting-' + name);
+            return value === null ? fallback : value === '1';
+        } catch (e) {
+            return fallback;
+        }
     }
-    var counter = window.__sukaNightModeCount || 0; // PJAX 刷新后保留计数
-    var maxCount = 10; // 允许的最大执行次数
 
-    function switchNightMode() {
-  if (counter >= maxCount) {
-    console.log("已达到最大执行次数");
-    return;
-  }
+    function saveSukaSetting(name, value) {
+        try {
+            localStorage.setItem('suka-setting-' + name, value ? '1' : '0');
+        } catch (e) { /* 隐私模式下仅本次生效 */ }
+    }
 
-  // 在这里放入你想要限制执行次数的代码
-  alert("将会打开一张色图，只能看两次");
-  var imageUrl = "https://api.r10086.com/%E6%A8%B1%E9%81%93%E9%9A%8F%E6%9C%BA%E5%9B%BE%E7%89%87api%E6%8E%A5%E5%8F%A3.php?%E5%9B%BE%E7%89%87%E7%B3%BB%E5%88%97=%E5%B0%91%E5%A5%B3%E5%86%99%E7%9C%9F1"; // 替换为你想要显示的图片地址
-         var windowFeatures = "width=400,height=300,top=100,left=100"; // 设置窗口大小和位置等参数
-         window.open(imageUrl, "floatingWindow", windowFeatures);
+    function applySukaSetting(name, value) {
+        saveSukaSetting(name, value);
+        if (name === 'particles' && window.SukaParticles) window.SukaParticles.setEnabled(value);
+        if (name === 'weather' && window.SukaWeather) window.SukaWeather.setEnabled(value);
+    }
 
-  counter++; // 每次执行完代码后递增计数器
-  window.__sukaNightModeCount = counter;
+    function closeSukaSettings() {
+        var panel = document.getElementById('suka-settings');
+        var toggle = document.getElementById('settings-toggle');
+        if (panel) {
+            panel.classList.remove('is-open');
+            panel.setAttribute('aria-hidden', 'true');
+        }
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    }
 
-  console.log("代码执行次数：" + counter);
-}
+    function toggleSukaSettings() {
+        var panel = document.getElementById('suka-settings');
+        var toggle = document.getElementById('settings-toggle');
+        if (!panel) return;
+        var open = !panel.classList.contains('is-open');
+        panel.classList.toggle('is-open', open);
+        panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+        if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
 
-    function checkNightMode() {
-
+    function SukaSettings() {
+        if (window.__sukaSettingsInited) {
+            syncCommentButton();
+            return;
+        }
+        window.__sukaSettingsInited = true;
+        var particles = document.getElementById('setting-particles');
+        var weather = document.getElementById('setting-weather');
+        if (particles) {
+            particles.checked = readSukaSetting('particles', true);
+            particles.addEventListener('change', function () { applySukaSetting('particles', particles.checked); });
+        }
+        if (weather) {
+            weather.checked = readSukaSetting('weather', true);
+            weather.addEventListener('change', function () { applySukaSetting('weather', weather.checked); });
+        }
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest) return;
+            if (e.target.closest('[data-settings-close]')) closeSukaSettings();
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeSukaSettings();
+        });
+        document.addEventListener('pjax:end', syncCommentButton);
+        syncCommentButton();
     }
 
     <% if (theme.dark_mode && theme.dark_mode.enable !== false) { %>
@@ -252,10 +285,18 @@
     }
     <% } %>
     BackTOP();
-    checkNightMode();
+    SukaSettings();
 </script>
 
 <style>
+    html.suka-weather-disabled #tp-weather-widget {
+        display: none !important;
+    }
+
+    .is-page-hidden {
+        display: none !important;
+    }
+
     #RightDownBtn {
         position: fixed;
         right: 1.875rem;
@@ -330,6 +371,180 @@
 
     [data-theme="dark"] #dark-mode-toggle .dm-icon-moon { display: none; }
     [data-theme="dark"] #dark-mode-toggle .dm-icon-sun { display: inline-block; }
+
+
+    .suka-settings {
+        position: fixed;
+        inset: 0;
+        z-index: 1001;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .suka-settings.is-open {
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .suka-settings-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgb(20 28 40 / .16);
+        opacity: 0;
+        transition: opacity .25s ease;
+    }
+
+    .suka-settings-panel {
+        position: absolute;
+        right: 5.2rem;
+        bottom: 1.875rem;
+        width: min(19rem, calc(100vw - 2rem));
+        padding: .8rem 1rem 1rem;
+        color: #50596c;
+        background: rgb(255 255 255 / .94);
+        border: 1px solid rgb(255 255 255 / .72);
+        border-radius: .75rem;
+        box-shadow: 0 8px 28px rgb(0 0 0 / .22);
+        backdrop-filter: blur(14px);
+        transform: translateY(.75rem) scale(.97);
+        opacity: 0;
+        transition: opacity .25s ease, transform .25s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .suka-settings.is-open .suka-settings-backdrop {
+        opacity: 1;
+    }
+
+    .suka-settings.is-open .suka-settings-panel {
+        opacity: 1;
+        transform: none;
+    }
+
+    .suka-settings-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: .55rem;
+    }
+
+    .suka-settings-header h2 {
+        margin: 0;
+        font-size: .95rem;
+        font-weight: 600;
+    }
+
+    .suka-settings-close {
+        padding: 0 .25rem;
+        color: #667189;
+        font-size: 1.3rem;
+        line-height: 1;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+    }
+
+    .suka-setting-row {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        min-height: 2.2rem;
+        color: #596579;
+        font-size: .78rem;
+        cursor: pointer;
+    }
+
+    .suka-setting-row input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+    }
+
+    .suka-setting-switch {
+        position: relative;
+        flex: 0 0 auto;
+        width: 2.25rem;
+        height: 1.25rem;
+        background: #c7ced8;
+        border-radius: 1rem;
+        transition: background .2s ease;
+    }
+
+    .suka-setting-switch::after {
+        position: absolute;
+        top: .15rem;
+        left: .15rem;
+        width: .95rem;
+        height: .95rem;
+        content: '';
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: 0 1px 3px rgb(0 0 0 / .22);
+        transition: transform .2s ease;
+    }
+
+    .suka-setting-row input:checked + .suka-setting-switch {
+        background: #3273dc;
+    }
+
+    .suka-setting-row input:checked + .suka-setting-switch::after {
+        transform: translateX(1rem);
+    }
+
+    .suka-setting-row input:focus-visible + .suka-setting-switch {
+        outline: 2px solid rgb(50 115 220 / .45);
+        outline-offset: 2px;
+    }
+
+    [data-theme="dark"] .suka-settings-backdrop {
+        background: rgb(0 0 0 / .45);
+    }
+
+    [data-theme="dark"] .suka-settings-panel {
+        color: var(--dm-text);
+        background: rgb(22 29 39 / .96);
+        border-color: var(--dm-border);
+    }
+
+    [data-theme="dark"] .suka-settings-close,
+    [data-theme="dark"] .suka-setting-row {
+        color: var(--dm-text-2);
+    }
+
+    @media (max-width: 640px) {
+        #RightDownBtn {
+            right: 0;
+            bottom: max(.75rem, env(safe-area-inset-bottom));
+            padding: .25rem .35rem .25rem .25rem;
+            border-radius: .75rem 0 0 .75rem;
+        }
+
+        #RightDownBtn > a,
+        #RightDownBtn > label {
+            width: 1.35em;
+            height: 1.35em;
+            margin: .25rem 0;
+        }
+
+        .suka-settings-panel {
+            right: .5rem;
+            bottom: max(.5rem, env(safe-area-inset-bottom));
+            left: .5rem;
+            width: auto;
+            border-radius: .9rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .suka-settings-backdrop,
+        .suka-settings-panel,
+        .suka-setting-switch,
+        .suka-setting-switch::after {
+            transition: none !important;
+        }
+    }
 
     #RightDownBtn.is-visible > a:hover,
     #RightDownBtn.is-visible > label:hover {
