@@ -1203,25 +1203,33 @@ footer {
 
 .tagscloud {
     margin: 0 0 2rem;
-    padding: 1rem;
+    padding: 1.5rem 1rem;
     text-align: center;
     line-height: 2.4;
+    background: rgb(255 255 255 / .8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: .6rem;
+    border: 1px solid rgb(255 255 255 / .6);
+    box-shadow: 0 2px 12px rgb(0 0 0 / .08);
 }
 
 .tagscloud a {
     display: inline-block;
     text-decoration: none;
-    padding: .3rem .7rem;
-    margin: .25rem;
-    border-radius: .3rem;
+    padding: .35rem .8rem;
+    margin: .2rem;
+    border-radius: 2rem;
     white-space: nowrap;
     transition: all .25s ease;
-    background: rgb(0 0 0 / .04);
+    background: rgb(0 0 0 / .05);
+    color: #2e3440;
 }
 
 .tagscloud a:hover {
-    background: rgb(0 0 0 / .1);
+    background: rgb(0 0 0 / .12);
     transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgb(0 0 0 / .1);
 }
 
 /**
