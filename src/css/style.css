@@ -284,7 +284,9 @@ header .divider {
 }
 
 .page-title {
-    font-size: 1.2rem
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
 /**
@@ -1200,24 +1202,21 @@ footer {
  */
 
 .tagscloud {
-    margin: 0 3rem 3rem;
+    margin: 0 0 2rem;
     padding: 0 1rem;
     min-height: 20rem;
+    text-align: center;
 }
 
 @media screen and (max-width: 960px) {
     .tagscloud {
         min-height: 10rem;
-        margin-left: 1.5rem;
-        margin-right: 1.5rem;
     }
 }
 
 @media screen and (max-width: 480px) {
     .tagscloud {
         min-height: 5rem;
-        margin-left: .5rem;
-        margin-right: .5rem;
         padding: 0;
     }
 }
@@ -1329,7 +1328,7 @@ a.timeline-tile-title span:hover {
 #search-input .form-input {
     border-radius: .4rem 0 0 .4rem;
     border: .05rem solid #c9d1d9;
-    background: rgba(255, 255, 255, .92);
+    background: rgb(255 255 255 / .92);
     backdrop-filter: blur(6px);
     transition: border-color .2s, box-shadow .2s;
 }
@@ -1386,7 +1385,7 @@ a.timeline-tile-title span:hover {
     border: none;
     border-top: none;
     border-radius: .5rem;
-    background: rgba(255, 255, 255, .85);
+    background: rgb(255 255 255 / .85);
     backdrop-filter: blur(4px);
     box-shadow: 0 1px 3px rgb(0 0 0 / .06), 0 1px 2px rgb(0 0 0 / .04);
     transition: box-shadow .2s, transform .15s;
@@ -1468,43 +1467,19 @@ a.timeline-tile-title span:hover {
     padding: .4rem 0;
 }
 
-@media (min-width: 960px) {
-    .link-container {
-        padding: .8rem 1.2rem 1.2rem;
-    }
-}
-
 .link-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .4rem;
     padding: 0;
-    margin: 0 auto;
-    max-width: 15.8rem;
-}
-
-@media screen and (min-width: 680px) {
-    .link-list {
-        max-width: 33.2rem;
-    }
-}
-
-@media screen and (min-width: 1024px) {
-    .link-list {
-        max-width: 49.8rem;
-    }
-}
-
-@media screen and (min-width: 1340px) {
-    .link-list {
-        max-width: 66.4rem;
-    }
 }
 
 .link-item {
-    margin: .4rem;
     box-shadow: 0 1px 1.5px 1px rgb(0, 0, 0, .12);
     transition: all .3s;
     height: 3.8rem;
     width: 15rem;
-    float: left;
     border-radius: var(--card-radius, 0);
     overflow: hidden;
 }
@@ -1933,7 +1908,7 @@ a.timeline-tile-title span:hover {
 /* 搜索页 暗色模式 */
 
 [data-theme="dark"] #search-input .form-input {
-    background: rgba(22, 29, 39, .92);
+    background: rgb(22 29 39 / .92);
     border-color: var(--dm-border);
     color: var(--dm-text);
 }
@@ -1948,7 +1923,7 @@ a.timeline-tile-title span:hover {
 }
 
 [data-theme="dark"] #search-output .tile {
-    background: rgba(22, 29, 39, .85);
+    background: rgb(22 29 39 / .85);
     box-shadow: 0 1px 3px rgb(0 0 0 / .2);
 }
 

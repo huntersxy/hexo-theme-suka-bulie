@@ -1,26 +1,28 @@
 <div class="container">
-    <div class="link-container">
-
-    <% if (site.data.links) { %>
-        <div class="link-list">
-        <% for (const i in site.data.links) { %>
-            <div class="link-item">
-                <a href="<%= site.data.links[i].url %>" title="<%= i %>" target="_blank">
-                    <div class="card">
-                        <div class="tile tile-centered">
-                            <div class="link-img">
-                                <img src="<%= site.data.links[i].img %>" alt="<%= i %>">
+    <div class="main-container">
+        <main>
+            <h2 class="page-title">友情链接</h2>
+            <% if (site.data.links) { %>
+                <div class="link-list">
+                <% for (const i in site.data.links) { %>
+                    <div class="link-item">
+                        <a href="<%= site.data.links[i].url %>" title="<%= i %>" target="_blank">
+                            <div class="card">
+                                <div class="tile tile-centered">
+                                    <div class="link-img">
+                                        <img src="<%= site.data.links[i].img %>" alt="<%= i %>">
+                                    </div>
+                                    <div class="tile-content link-content">
+                                        <div class="tile-title link-title"><%= i %></div>
+                                        <div class="tile-subtitle link-descr text-gray"><%- site.data.links[i].text %></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="tile-content link-content">
-                                <div class="tile-title link-title"><%= i %></div>
-                                <div class="tile-subtitle link-descr text-gray"><%- site.data.links[i].text %></div>
-                            </div>
-                        </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-        <% } %>
-        </div>
-    <% } %>
+                <% } %>
+                </div>
+            <% } %>
+        </main>
     </div>
 </div>
