@@ -269,9 +269,13 @@
     /* ---------- 应用页面 ---------- */
 
     function applyPage(url, payload, opts) {
-        // payload: { html, title } 或 { doc }
-        var parsed = payload.doc || new DOMParser().parseFromString(payload.html, 'text/html');
-        var newContainer = parsed.querySelector(CONTAINER_SELECTOR);
+        // payload: { html, title }、{ doc } 或缓存命中的 { el, title }
+        var parsed = null;
+        var newContainer = payload.el || null;
+        if (!newContainer) {
+            parsed = payload.doc || new DOMParser().parseFromString(payload.html, 'text/html');
+            newContainer = parsed.querySelector(CONTAINER_SELECTOR);
+        }
         if (!newContainer) {
             // 目标页面没有刷新容器 (如 404), 回退为整页跳转
             window.location.href = url.href;
@@ -280,12 +284,13 @@
 
         var key = keyOf(url);
 
+        // 缓存解析后的容器元素而非 HTML 字符串: 元素只读不修改,
+        // 命中时免去对整页 HTML 的再次 DOMParser 解析
         if (CACHE_SIZE > 0 && !payload.fromCache) {
-            var titleEl = parsed.querySelector('title');
+            var titleEl = parsed ? parsed.querySelector('title') : null;
             cache.set(key, {
-                // 缓存容器 outerHTML, 缓存命中时解析后仍能找到 #pjax-container
-                html: newContainer.outerHTML,
-                title: titleEl ? titleEl.textContent : ''
+                el: newContainer,
+                title: titleEl ? titleEl.textContent : (payload.title || '')
             });
             if (cache.size > CACHE_SIZE) {
                 cache.delete(cache.keys().next().value); // 淘汰最旧
@@ -310,7 +315,7 @@
 
             // 标题
             var title = payload.title;
-            if (title === undefined || title === '') {
+            if ((title === undefined || title === '') && parsed) {
                 var tEl = parsed.querySelector('title');
                 title = tEl ? tEl.textContent : '';
             }
@@ -587,7 +592,7 @@
             if (!newContainer) return;
             var titleEl = parsed.querySelector('title');
             cache.set(key, {
-                html: newContainer.outerHTML,
+                el: newContainer,
                 title: titleEl ? titleEl.textContent : ''
             });
             while (cache.size > CACHE_SIZE) {
@@ -604,19 +609,25 @@
         return /^\/\d{4}\/\d{2}\/\d{2}\//.test(href || '');
     }
 
-    // 首屏可见的文章链接自动预取 (首页/归档列表)
+    // 首屏可见的文章链接自动预取 (首页/归档列表)。
+    // 扫描放到空闲时段执行, 且先用廉价的路径正则筛掉非文章链接,
+    // 避免在链接数百条的页面上同步做大量 new URL / matches
     function prefetchVisiblePosts() {
         if (!container || !PREFETCH_ENABLED || !PREFETCH_IDLE) return;
-        var links = container.querySelectorAll('a[href]');
-        var vh = window.innerHeight || document.documentElement.clientHeight;
-        for (var i = 0; i < links.length; i++) {
-            var link = links[i];
-            if (!shouldIntercept(link)) continue;
-            if (!isPostHref(link.getAttribute('href'))) continue;
-            var rect = link.getBoundingClientRect();
-            if (rect.bottom < 0 || rect.top > vh) continue; // 不在视口内
-            prefetchLink(link);
-        }
+        var schedule = window.requestIdleCallback || function (fn) { setTimeout(fn, 200); };
+        schedule(function () {
+            if (!container) return;
+            var links = container.querySelectorAll('a[href]');
+            var vh = window.innerHeight || document.documentElement.clientHeight;
+            for (var i = 0; i < links.length; i++) {
+                var link = links[i];
+                if (!isPostHref(link.getAttribute('href'))) continue;
+                if (!shouldIntercept(link)) continue;
+                var rect = link.getBoundingClientRect();
+                if (rect.bottom < 0 || rect.top > vh) continue; // 不在视口内
+                prefetchLink(link);
+            }
+        });
     }
 
     // 桌面: 悬停去抖后预取 (移出链接则取消)

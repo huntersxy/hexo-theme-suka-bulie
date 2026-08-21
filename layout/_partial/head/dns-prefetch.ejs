@@ -1,5 +1,10 @@
 <meta http-equiv="x-dns-prefetch-control" content="on">
 
+<!-- avatar (文章卡片/文章页头像, 为外链时提前建连加速首图) -->
+<% if (theme.img.avatar && /^https?:\/\//i.test(theme.img.avatar)) { %>
+    <link rel="preconnect" href="<%= theme.img.avatar.replace(/^(https?:\/\/[^\/]+).*/i, '$1') %>">
+<% } %>
+
 <!-- busuanzi -->
 <% if (theme.busuanzi.enable) { %>
     <link rel="preconnect" href="https://busuanzi.ibruce.info" crossorigin>

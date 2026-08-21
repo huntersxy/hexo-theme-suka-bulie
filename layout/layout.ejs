@@ -72,9 +72,24 @@
         cursor.y = null;
     }
 
+    // 分桶批量绘制: 每帧把连线按透明度分到 BUCKETS 个桶, 每桶只设置一次
+    // strokeStyle/lineWidth 并用单一路径 stroke, 避免每条线拼 rgba 字符串
+    // (约千次/帧的字符串分配与状态切换) 造成的主线程与 GC 压力
+    var BUCKETS = 8;
+    var bucketStyles = [];
+    var bucketWidths = [];
+    var bucketSegs = [];
+    for (var b = 0; b < BUCKETS; b++) {
+        var midAlpha = (b + .5) / BUCKETS; // 桶中点的 opacity 近似值
+        bucketStyles.push('rgba(0,0,0,' + Math.min(1, midAlpha + .2).toFixed(3) + ')');
+        bucketWidths.push(midAlpha / 2);
+        bucketSegs.push([]);
+    }
+
     function draw() {
         if (!running || !context) return;
         context.clearRect(0, 0, width, height);
+        for (var s = 0; s < BUCKETS; s++) bucketSegs[s].length = 0;
         for (var i = 0; i < points.length; i++) {
             var point = points[i];
             point.x += point.xa;
@@ -94,13 +109,22 @@
                     point.y -= .03 * dy;
                 }
                 var opacity = (target.max - distance) / target.max;
-                context.beginPath();
-                context.lineWidth = opacity / 2;
-                context.strokeStyle = 'rgba(0,0,0,' + (opacity + .2) + ')';
-                context.moveTo(point.x, point.y);
-                context.lineTo(target.x, target.y);
-                context.stroke();
+                var bucket = opacity >= 1 ? BUCKETS - 1 : (opacity * BUCKETS) | 0;
+                var segs = bucketSegs[bucket];
+                segs.push(point.x, point.y, target.x, target.y);
             }
+        }
+        for (var k = 0; k < BUCKETS; k++) {
+            var seg = bucketSegs[k];
+            if (seg.length === 0) continue;
+            context.beginPath();
+            context.lineWidth = bucketWidths[k];
+            context.strokeStyle = bucketStyles[k];
+            for (var n = 0; n < seg.length; n += 4) {
+                context.moveTo(seg[n], seg[n + 1]);
+                context.lineTo(seg[n + 2], seg[n + 3]);
+            }
+            context.stroke();
         }
         frame = raf(draw);
     }
@@ -116,7 +140,10 @@
         document.body.appendChild(canvas);
         resize();
         points = [];
-        for (var i = 0; i < 50; i++) {
+        // 点数随视口面积自适应: 手机约 24 点, 桌面满屏 50 点
+        // (连线判定是 O(n^2), 小屏跑满 50 点纯属浪费电)
+        var count = Math.max(24, Math.min(50, Math.round(width * height / 20000)));
+        for (var i = 0; i < count; i++) {
             points.push({
                 x: Math.random() * width,
                 y: Math.random() * height,
@@ -153,7 +180,11 @@
         isEnabled: function () { return running; }
     };
 
-    if (storedEnabled('particles')) start();
+    // 尊重系统"减少动态效果": 默认不自动启动 (设置面板手动开启仍可用)
+    var motionReduced = !!(window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+    if (storedEnabled('particles') && !motionReduced) start();
 })();
 </script>
 <!-- # 这是天气 # -->

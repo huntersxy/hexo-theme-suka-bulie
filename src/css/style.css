@@ -41,6 +41,11 @@ html .btn:focus {
     box-shadow: none !important;
 }
 
+/* 全站链接主色 (原先误写在 right.ejs 工具栏的内联样式里, 移回此处) */
+html a {
+    color: #3273dc;
+}
+
 .card {
     /* Remove card border */
     border: none;

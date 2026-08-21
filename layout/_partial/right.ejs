@@ -161,8 +161,12 @@
         // PJAX 无刷新加载: 脚本会随页面内容重复执行, 这里用标记保证只绑定一次
         if (window.__sukaBackTopInited) return;
         window.__sukaBackTopInited = true;
-        // 显示/隐藏走 CSS 过渡 (.is-visible), 每次取最新 DOM (PJAX 会重建浮动栏)
+        // 显示/隐藏走 CSS 过渡 (.is-visible); 滚动事件高频触发,
+        // 状态未变化时直接返回, 只在翻转时才查 DOM 改 class
+        var btnState = null;
         function setVisible(v) {
+            if (v === btnState) return;
+            btnState = v;
             var el = document.getElementById('RightDownBtn');
             if (el) el.classList.toggle('is-visible', v);
         }
@@ -561,9 +565,11 @@
         }
     }
 
-    a {
+    /* 工具栏内均为可点击锚点 (部分无 href), 统一指针与配色;
+       全站链接主色已移回 style.css 的 Global 段 */
+    #RightDownBtn a {
         color: #3273dc;
-        cursor: pointer !important;
+        cursor: pointer;
         text-decoration: none;
     }
 
